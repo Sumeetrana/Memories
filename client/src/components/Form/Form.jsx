@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
+import { useDispatch } from 'react-redux';
 import { Button, Paper, TextField, Typography } from '@material-ui/core';
 
 import useStyles from './style';
+import { createNewMemoryPost } from '../../actions/posts';
 
 const Form = () => {
   const classes = useStyles();
@@ -14,8 +16,12 @@ const Form = () => {
     selectedFile: ''
   })
 
-  const onCreateMemoryFormSubmit = () => {
+  const dispatch = useDispatch();
 
+  const onCreateMemoryFormSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(createNewMemoryPost(postData));
   }
 
   const onClearForm = () => {

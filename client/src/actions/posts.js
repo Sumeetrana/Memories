@@ -12,3 +12,13 @@ export const getPosts = () => async (dispatch) => {
   }
 
 }
+
+export const createNewMemoryPost = (post) => async (dispatch) => {
+  try {
+    const { data } = await api.createNewMemoryPost(post);
+
+    dispatch({ type: 'CREATE', payload: data })
+  } catch (error) {
+    console.log(error);
+  }
+}
