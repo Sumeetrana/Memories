@@ -20,7 +20,7 @@ const Form = () => {
 
   const onCreateMemoryFormSubmit = (e) => {
     e.preventDefault();
-
+    // console.log("PostData: ", postData);
     dispatch(createNewMemoryPost(postData));
   }
 
