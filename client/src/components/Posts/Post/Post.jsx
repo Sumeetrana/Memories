@@ -7,7 +7,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@
 
 import useStyles from './styles';
 
-const Post = ({ post }) => {
+const Post = ({ post, setPostId }) => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -17,7 +17,9 @@ const Post = ({ post }) => {
         <Typography variant="body2">{moment(post.createdOn).fromNow()}</Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size="small" onClick={() => { }}>
+        <Button style={{ color: 'white' }} size="small" onClick={() => {
+          setPostId(post._id)
+        }}>
           <MoreHorizIcon fontSize="default" />
         </Button>
       </div>

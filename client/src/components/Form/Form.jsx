@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Paper, TextField, Typography } from '@material-ui/core';
 
 import useStyles from './style';
-import { createNewMemoryPost } from '../../actions/posts';
+import { createNewMemoryPost, updateMemoryPost } from '../../actions/posts';
 
-const Form = () => {
+const Form = ({ postId, setPostId }) => {
   const classes = useStyles();
   const [postData, setPostData] = useState({
     creator: '',
@@ -16,16 +16,34 @@ const Form = () => {
     selectedFile: ''
   })
 
+  const post = useSelector(state => postId ? state.posts.find(post => post._id === postId) : null);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post])
 
   const onCreateMemoryFormSubmit = (e) => {
     e.preventDefault();
-    // console.log("PostData: ", postData);
-    dispatch(createNewMemoryPost(postData));
+
+    if (postId) {
+      dispatch(updateMemoryPost(postId, postData));
+    } else {
+      dispatch(createNewMemoryPost(postData));
+    }
+    onClearForm();
   }
 
   const onClearForm = () => {
-
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: ''
+    })
+    setPostId(null);
   }
 
   return (
